@@ -1,8 +1,10 @@
+
 import { useMemo } from "react";
 
 function WeatherBackground({ weatherCode, darkMode }) {
 
     const weatherType = useMemo(() => {
+
         const code = Number(weatherCode);
 
         if (code === 0) return "clear";
@@ -17,15 +19,21 @@ function WeatherBackground({ weatherCode, darkMode }) {
         if (code >= 95 && code <= 99) return "thunderstorm";
 
         return "clear";
+
     }, [weatherCode]);
+
+    const base = import.meta.env.BASE_URL;
 
     // DARK MODE
     if (darkMode) {
+
         return (
             <div className="weather-background">
+
                 <video
-                    className="static-background-video"
-                    src="/background.mp4"
+                    key="dark-background-video"
+                    className="weather-background-video"
+                    src={`${base}background.mp4`}
                     autoPlay
                     muted
                     loop
@@ -34,16 +42,19 @@ function WeatherBackground({ weatherCode, darkMode }) {
                 />
 
                 <div className="weather-background-overlay" />
+
             </div>
         );
     }
 
     // LIGHT MODE — WEATHER VIDEO
+
     const videoSource =
-        `/weather/${weatherType}.mp4`;
+        `${base}weather/${weatherType}.mp4`;
 
     return (
         <div className="weather-background">
+
             <video
                 key={videoSource}
                 className="weather-background-video"
@@ -56,6 +67,7 @@ function WeatherBackground({ weatherCode, darkMode }) {
             />
 
             <div className="weather-background-overlay" />
+
         </div>
     );
 }
